@@ -36,7 +36,6 @@ pipeline {
     post {
         always {
             // Cleanup Docker containers and images
-            sh 'docker rm -f nginx-webserver-${BUILD_ID} || true'
             sh 'docker rmi -f nginx-webserver || true'
         }
     }
