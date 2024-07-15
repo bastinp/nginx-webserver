@@ -9,7 +9,7 @@ pipeline {
                     checkout scm
                     
                     // Build the Docker image
-                    sh 'docker build -t nginx-webserver:$BUILD_NUMBER .'
+                    sh 'docker build -t nginx-webserver .'
                 }
             }
         }
@@ -27,9 +27,7 @@ pipeline {
             steps {
                 script {
                     // Deploy the Docker container
-		    sh 'docker stop nginx-webserver'
-		    sh 'docker rm nginx-webserver'
-                    sh 'docker run -d -p 80:80 nginx-webserver:$BUILD_NUMBER'
+                    sh 'docker run -d -p 80:80 nginx-webserver'
                 }
             }
         }
@@ -38,9 +36,8 @@ pipeline {
     post {
         always {
             // Cleanup Docker containers and images
-            //sh 'docker rm -f nginx-webserver-${BUILD_ID} || true'
-            sh 'docker rmi -f nginx-webserver:$BUILD_NUMBER || true'
+            sh 'docker rm -f nginx-webserver-${BUILD_ID} || true'
+            sh 'docker rmi -f nginx-webserver || true'
         }
     }
 }
-
