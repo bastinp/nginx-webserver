@@ -23,14 +23,6 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-            steps {
-                script {
-                    // Deploy the Docker container
-                    sh 'docker run -d -p 80:80 nginx-webserver'
-                }
-            }
-        }
     }
 
     post {
